@@ -29,8 +29,6 @@ class Board
       5
     elsif column.upcase == 'G'
       6
-    else
-      raise StandardError, "Incorrect column reference!"
     end
   end
 
@@ -52,11 +50,20 @@ class Board
       column_index = column_translator(column)
     elsif column.is_a?(Integer) && column >= 0 && column <= 6
       column_index = column
-    else
-      raise StandardError, "Incorrect column reference!"
     end
     row_index = last_in_column(column_index)
     @board[row_index][column_index] = player
+  end
+
+  def valid_move?(column)
+    columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
+    if column.is_a?(Integer) && column >= 0 && column <= 6
+      true
+    elsif column.is_a?(String) && columns.include?(column.upcase)
+      true
+    else
+      false
+    end
   end
 
   def printer
@@ -95,6 +102,7 @@ class Board
   end
 
   def winner?
+    false
   end
 
   private :last_in_column, :column_translator

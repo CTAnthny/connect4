@@ -64,12 +64,12 @@ describe Board do
       expect(board.has_empty_spaces?).to eq(false)
     end
   end
-
-  describe "#add_turn" do
-    it "does something when someone succesfully adds a piece"
-
-    it "returns an error when the column is not valid"
-  end
-
-  describe "#winner"
+  # 
+  # describe "#add_turn" do
+  #   it "does something when someone succesfully adds a piece"
+  #
+  #   it "returns an error when the column is not valid"
+  # end
+  #
+  # describe "#winner"
 end
