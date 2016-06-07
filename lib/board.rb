@@ -30,7 +30,7 @@ class Board
     elsif column.upcase == 'G'
       6
     else
-      "Incorrect column reference!"
+      raise StandardError, "Incorrect column reference!"
     end
   end
 
@@ -43,17 +43,23 @@ class Board
       end
     end
     token_row_coordinate
-    # since column index is given, returns only the row index of
-    # where the token 'drops' for the column
+  # since column index is given, returns only the row index of
+  # where the token 'drops' for the column
   end
 
   def add_turn(player, column)
-    column_index = column_translator(column)
+    if !column.is_a?(Integer)
+      column_index = column_translator(column)
+    elsif column.is_a?(Integer) && column >= 0 && column <= 6
+      column_index = column
+    else
+      raise StandardError, "Incorrect column reference!"
+    end
     row_index = last_in_column(column_index)
     @board[row_index][column_index] = player
   end
 
-  def print
+  def printer
     board_print = ""
     @board.each do |row|
       row.each_with_index do |space, index|
@@ -77,8 +83,20 @@ class Board
   end
 
   def has_empty_spaces?
+    spaces = false
+    @board.each do |row|
+      row.each do |column|
+        if column.nil?
+          spaces = true
+        end
+      end
+    end
+    spaces
   end
 
   def winner?
   end
+
+  private :last_in_column, :column_translator
+
 end
