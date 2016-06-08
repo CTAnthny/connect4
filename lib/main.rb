@@ -12,6 +12,7 @@ o_player = Player.new('o')
 
 players = [x_player, o_player].shuffle
 turn_index = 0
+puts board.printer
 
 while board.has_empty_spaces? && !board.winner?
   players_turn = players[turn_index].character

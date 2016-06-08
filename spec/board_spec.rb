@@ -64,7 +64,20 @@ describe Board do
       expect(board.has_empty_spaces?).to eq(false)
     end
   end
-  # 
+
+  describe "#valid_move?" do
+    it 'returns true for a valid column input (as per #add_turn)' do
+      expect(board.valid_move?(1)).to eq(true)
+      expect(board.valid_move?('a')).to eq(true)
+      expect(board.valid_move?('A')).to eq(true)
+    end
+
+    it 'returns false for an invalid column input (as per #add_turn)' do
+      expect(board.valid_move?(14)).to eq(false)
+      expect(board.valid_move?('z')).to eq(false)
+    end
+  end
+
   # describe "#add_turn" do
   #   it "does something when someone succesfully adds a piece"
   #
