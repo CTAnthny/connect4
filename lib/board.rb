@@ -55,6 +55,8 @@ class Board
     end
     row_index = last_in_column(column_index)
     @board[row_index][column_index].player = player
+    # @last_turn = GameTurn.new(self, player, row_index, col_index)
+    # @last_turn.take!
   end
 
   def valid_move?(column)
@@ -105,6 +107,11 @@ class Board
 
   def winner?
     false
+    # if @last_turn
+    #   @last_turn.winner?  # (called from game_turn class)
+    # else
+    #   false
+    # end
   end
 
   private :last_in_column, :column_translator
