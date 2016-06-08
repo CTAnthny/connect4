@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe Board do
   let(:board) { Board.new }
+  let(:player_x) { Player.new('x') }
+  let(:player_o) { Player.new('o') }
 
   describe "#initialize" do
     it 'is initialized with 6 rows and 7 columns' do
@@ -24,7 +26,7 @@ describe Board do
     end
 
     it 'places a players token on the board' do
-      board.add_turn('x', 'A')
+      board.add_turn(player_x, 'A')
       board_printout =
       "| - | - | - | - | - | - | - |\n" +
       "| - | - | - | - | - | - | - |\n" +
@@ -37,7 +39,7 @@ describe Board do
     end
 
     it 'places a players token in the center column on the board' do
-      board.add_turn('o', 'D')
+      board.add_turn(player_o, 'D')
       board_printout =
       "| - | - | - | - | - | - | - |\n" +
       "| - | - | - | - | - | - | - |\n" +
@@ -58,7 +60,7 @@ describe Board do
     it 'has no empty spaces when completely occupied' do
       6.times do |row_index|
         7.times do |col_index|
-          board.add_turn('x', col_index)
+          board.add_turn(player_x, col_index)
         end
       end
       expect(board.has_empty_spaces?).to eq(false)

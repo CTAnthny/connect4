@@ -1,10 +1,12 @@
+require_relative '../spec/spec_helper'
+
 class Board
   def initialize
     @board = []
     6.times do
       row = []
       7.times do
-        row << nil
+        row << BoardSpace.new
       end
       @board << row
     end
@@ -36,7 +38,7 @@ class Board
   def last_in_column(column_index)
     token_row_coordinate = nil
     @board.each_with_index do |row, index|
-      if row[column_index].nil?
+      if !row[column_index].occupied?
         token_row_coordinate = index
       end
     end
@@ -52,7 +54,7 @@ class Board
       column_index = column
     end
     row_index = last_in_column(column_index)
-    @board[row_index][column_index] = player
+    @board[row_index][column_index].player = player
   end
 
   def valid_move?(column)
@@ -71,16 +73,16 @@ class Board
     @board.each do |row|
       row.each_with_index do |space, index|
         if index < row.size - 1
-          if space.nil?
-            board_print << "| - "
+          if !space.occupied?
+            board_print << "| #{space.token} "
           else
-            board_print << "| #{space} "
+            board_print << "| #{space.token} "
           end
         else
-          if space.nil?
-            board_print << "| - |\n"
+          if !space.occupied?
+            board_print << "| #{space.token} |\n"
           else
-            board_print << "| #{space} |\n"
+            board_print << "| #{space.token} |\n"
           end
         end
       end
@@ -93,7 +95,7 @@ class Board
     spaces = false
     @board.each do |row|
       row.each do |column|
-        if column.nil?
+        if !column.occupied?
           spaces = true
         end
       end
