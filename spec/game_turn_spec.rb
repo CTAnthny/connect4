@@ -63,8 +63,52 @@ describe GameTurn do
     end
 
     context 'vertical' do
-      it 'is a win if a player has 4 in a line in the column'
-      it 'is not a win if a line is interrupted by another player'
+      it 'is a win if a player has 4 in a line in the column' do
+        winning_board = Board.new
+        3.times do
+          winning_board.add_turn(player, 3)
+        end
+
+        winning_turn = GameTurn.new(winning_board, player, 2, 3)
+        winning_turn.take!
+        expect(winning_turn).to be_winner
+      end
+
+      it 'is not a win if a line is interrupted by another player' do
+        losing_board = Board.new
+        2.times do
+          losing_board.add_turn(player, 3)
+        end
+
+        losing_board.add_turn(opposing_player, 3)
+        losing_turn = GameTurn.new(losing_board, player, 2, 3)
+        losing_turn.take!
+        expect(losing_turn).to_not be_winner
+      end
+
+      it 'is a win if a player has 4 in a line in the far left column' do
+        winning_board = Board.new
+        3.times do
+          winning_board.add_turn(player, 0)
+        end
+
+        winning_turn = GameTurn.new(winning_board, player, 2, 0)
+        winning_turn.take!
+        expect(winning_turn).to be_winner
+      end
+
+      it 'is a win if a player has 4 in a line near the top of the column' do
+        winning_board = Board.new
+        winning_board.add_turn(player, 3)
+        winning_board.add_turn(opposing_player, 3)
+        3.times do
+          winning_board.add_turn(player, 3)
+        end
+
+        winning_turn = GameTurn.new(winning_board, player, 0, 3)
+        winning_turn.take!
+        expect(winning_turn).to be_winner
+      end
     end
 
     context 'diagonal' do
