@@ -54,16 +54,16 @@ class Board
       column_index = column
     end
     row_index = last_in_column(column_index)
-    @board[row_index][column_index].player = player
-    # @last_turn = GameTurn.new(self, player, row_index, col_index)
-    # @last_turn.take!
+    # @board[row_index][column_index].player = player
+    @last_turn = GameTurn.new(self, player, row_index, column_index)
+    @last_turn.take!
   end
 
   def valid_move?(column)
     columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
     if column.is_a?(Integer) && column >= 0 && column <= 6
       true
-    elsif column.is_a?(String) && columns.include?(column.upcase)
+    elsif column.is_a?(String) && columns.include?(column.upcase) 
       true
     else
       false
@@ -106,14 +106,13 @@ class Board
   end
 
   def winner?
-    false
-    # if @last_turn
-    #   @last_turn.winner?  # (called from game_turn class)
-    # else
-    #   false
-    # end
+    if @last_turn
+      @last_turn.winner?  # (called from game_turn class)
+    else
+      false
+    end
   end
 
-  private :column_translator
+  private :last_in_column, :column_translator
 
 end

@@ -10,32 +10,45 @@ describe GameTurn do
   let(:winning_board) { Board.new }
   let(:losing_board) { Board.new }
 
-  it 'has a board' do
-    expect(turn.board).to eq(board)
+  describe "#initialize" do
+    it 'has a board' do
+      expect(turn.board).to eq(board)
+    end
+
+    it 'has a player' do
+      expect(turn.player).to eq(player)
+    end
+
+    it 'has a row index' do
+      expect(turn.row_index).to eq(row_index)
+    end
+
+    it 'has a column index' do
+      expect(turn.col_index).to eq(col_index)
+    end
   end
 
-  it 'has a player' do
-    expect(turn.player).to eq(player)
+  describe "#take!" do
+    it "modifies the board_space value at a certain coordinate" do
+      turn.take!
+      expect(board.board[row_index][col_index].player).to eq(player)
+    end
   end
 
-  it 'has a row index' do
-    expect(turn.row_index).to eq(row_index)
-  end
+  describe "#winner?" do
+    context "checking for win conditions" do
+      describe '#horizontal_win?' do
+        let(:row_index) { 5 }
+        let(:column_index) { 3 }
 
-  it 'has a column index' do
-    expect(turn.col_index).to eq(col_index)
-  end
-
-  context 'checking for win conditions' do
-    context 'horizontal' do
       it 'is a win if a row of 4 of the same player is found' do
         3.times do |col_index|
           winning_board.add_turn(player, col_index)
         end
 
-        winning_turn = GameTurn.new(winning_board, player, 5, 3)
-        winning_turn.take!
-        expect(winning_turn).to be_winner
+        #  winning_turn = GameTurn.new(winning_board, player, 5, 3)
+        turn.take!
+        expect(turn).to be_winner
         # expect(winning_turn.winner?).to be(true)
       end
 
@@ -45,9 +58,9 @@ describe GameTurn do
         end
 
         losing_board.add_turn(opposing_player, 2)
-        losing_turn = GameTurn.new(losing_board, player, 5, 3)
-        losing_turn.take!
-        expect(losing_turn).to_not be_winner
+        # losing_turn = GameTurn.new(losing_board, player, 5, 3)
+        turn.take!
+        expect(turn).to_not be_winner
       end
 
       it 'is a win if a row of 4 of the same player is found in the middle of the row' do
@@ -55,13 +68,13 @@ describe GameTurn do
         winning_board.add_turn(player, 4)
         winning_board.add_turn(player, 5)
 
-        winning_turn = GameTurn.new(winning_board, player, 5, 3)
-        winning_turn.take!
-        expect(winning_turn).to be_winner
+        # winning_turn = GameTurn.new(winning_board, player, 5, 3)
+        turn.take!
+        expect(turn).to be_winner
       end
-    end
+      end
 
-    context 'vertical' do
+    describe "#vertical_win?" do
       it 'is a win if a player has 4 in a line in the column' do
         3.times do
           winning_board.add_turn(player, 3)
@@ -106,7 +119,7 @@ describe GameTurn do
       end
     end
 
-    context 'diagonal' do
+    describe "#diagonal_win_right" do
       it 'is a win if a player has 4 in a diagonal line' do
         winning_board.add_turn(player, 0)
         2.times { winning_board.add_turn(player, 1) }
@@ -127,22 +140,24 @@ describe GameTurn do
         expect(losing_turn).to_not be_winner
       end
 
-      it 'is a win if a player has 4 in a diagonal line towards the top-left' do
-        3.times { winning_board.add_turn(player, 0); winning_board.add_turn(opposing_player, 0) }
-        2.times { winning_board.add_turn(opposing_player, 1); winning_board.add_turn(player, 1) }
-        winning_board.add_turn(opposing_player, 1)
-        2.times { winning_board.add_turn(player, 2); winning_board.add_turn(opposing_player, 2) }
-
-        winning_turn = GameTurn.new(winning_board, opposing_player, 3, 3)
-        winning_turn.take!
-        expect(winning_turn).to be_winner
-      end
-
       it 'is a win if a player has 4 in a diagonal line towards the top-right' do
         3.times { winning_board.add_turn(player, 6); winning_board.add_turn(opposing_player, 6) }
         2.times { winning_board.add_turn(opposing_player, 5); winning_board.add_turn(player, 5) }
         winning_board.add_turn(opposing_player, 5)
         2.times { winning_board.add_turn(player, 4); winning_board.add_turn(opposing_player, 4) }
+
+        winning_turn = GameTurn.new(winning_board, opposing_player, 3, 3)
+        winning_turn.take!
+        expect(winning_turn).to be_winner
+      end
+    end
+
+    describe "#diagonal_win_left" do
+      it 'is a win if a player has 4 in a diagonal line towards the top-left' do
+        3.times { winning_board.add_turn(player, 0); winning_board.add_turn(opposing_player, 0) }
+        2.times { winning_board.add_turn(opposing_player, 1); winning_board.add_turn(player, 1) }
+        winning_board.add_turn(opposing_player, 1)
+        2.times { winning_board.add_turn(player, 2); winning_board.add_turn(opposing_player, 2) }
 
         winning_turn = GameTurn.new(winning_board, opposing_player, 3, 3)
         winning_turn.take!
@@ -158,6 +173,7 @@ describe GameTurn do
         winning_turn.take!
         expect(winning_turn).to be_winner
       end
+    end
     end
   end
 end

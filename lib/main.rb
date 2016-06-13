@@ -19,17 +19,16 @@ while board.has_empty_spaces? && !board.winner?
 
   puts "It is #{players_turn}'s turn.\n"
 
-  column_index = nil
+  puts "What column do you want to play?"
+  column_index = gets.chomp
+
   until board.valid_move?(column_index)
+    puts "Invalid move! Please enter between 'A' and 'G'."
     puts "What column do you want to play?"
     column_index = gets.chomp
-
-    if board.valid_move?(column_index)
-      board.add_turn(players_turn, column_index)
-    else
-      puts "Please enter between 'A' and 'G'."
-    end
   end
+
+  board.add_turn(players_turn, column_index)
 
   puts board.printer
 
