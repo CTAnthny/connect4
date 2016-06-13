@@ -78,8 +78,11 @@ describe Board do
       expect(board.valid_move?(14)).to eq(false)
       expect(board.valid_move?('z')).to eq(false)
     end
+
+    # check valid move when column is full
   end
 
+  # describe "#last_in_column"
   # describe "#add_turn" do
   #   it "does something when someone succesfully adds a piece"
   #

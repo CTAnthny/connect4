@@ -114,6 +114,6 @@ class Board
     # end
   end
 
-  private :last_in_column, :column_translator
+  private :column_translator
 
 end
