@@ -91,3 +91,12 @@ describe Board do
   #
   # describe "#winner"
 end
+
+# testing diagram:
+# "| o | x | o | - | - | x | o |\n" +
+# "| x | o | x | - | x | o | x |\n" +
+# "| o | x | o | x | o | x | o |\n" +
+# "| x | o | x | o | x | o | x |\n" +
+# "| o | x | o | - | o | x | o |\n" +
+# "| x | o | x | o | x | o | x |\n" +
+# "  A   B   C   D   E   F   G "

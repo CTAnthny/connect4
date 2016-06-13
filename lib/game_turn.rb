@@ -15,7 +15,7 @@ class GameTurn
   end
 
   def winner?
-    horizontal_win? || vertical_win? # || diagonal_win?
+    horizontal_win? || vertical_win? || diagonal_win_left? || diagonal_win_right?
   end
 
   def horizontal_win?
@@ -71,7 +71,7 @@ class GameTurn
     adjacent_counter = 1
     while true || token_match_counter < 3
       if on_board?(@row_index - adjacent_counter, @col_index) &&
-        @board.board[@row_index - adjacent_counter][@col_index].token == player_token
+      @board.board[@row_index - adjacent_counter][@col_index].token == player_token
         adjacent_counter += 1
         token_match_counter += 1
       else
@@ -82,8 +82,65 @@ class GameTurn
     token_match_counter == 3
   end
 
-  # def diagonal_win?
-  # end
+  def diagonal_win_left?
+    token_match_counter = 0
+    player_token = @player.character
+    adjacent_counter = 1
+    # loop for match diagonally towards bottom-right from the take! move
+    while true || token_match_counter < 3
+      if on_board?(@row_index + adjacent_counter, @col_index + adjacent_counter) &&
+      @board.board[@row_index + adjacent_counter][@col_index + adjacent_counter].token == player_token
+        adjacent_counter += 1
+        token_match_counter += 1
+      else
+        break
+      end
+    end
+
+    # loop for match diagonally towards top-left from the take! move
+    adjacent_counter = 1
+    while true || token_match_counter < 3
+      if on_board?(@row_index - adjacent_counter, @col_index - adjacent_counter) &&
+      @board.board[@row_index - adjacent_counter][@col_index - adjacent_counter].token == player_token
+        adjacent_counter += 1
+        token_match_counter += 1
+      else
+        break
+      end
+    end
+
+    token_match_counter == 3
+  end
+
+  def diagonal_win_right?
+    token_match_counter = 0
+    player_token = @player.character
+    adjacent_counter = 1
+    # loop for match diagonally towards bottom-left from the take! move
+    while true || token_match_counter < 3
+      if on_board?(@row_index + adjacent_counter, @col_index - adjacent_counter) &&
+      @board.board[@row_index + adjacent_counter][@col_index - adjacent_counter].token == player_token
+        adjacent_counter += 1
+        token_match_counter += 1
+      else
+        break
+      end
+    end
+
+    # loop for match diagonally towards top-right from the take! move
+    adjacent_counter = 1
+    while true || token_match_counter < 3
+      if on_board?(@row_index - adjacent_counter, @col_index + adjacent_counter) &&
+      @board.board[@row_index - adjacent_counter][@col_index + adjacent_counter].token == player_token
+        adjacent_counter += 1
+        token_match_counter += 1
+      else
+        break
+      end
+    end
+
+    token_match_counter == 3
+  end
 
   def on_board?(row, col)
     return row >= 0 && col >= 0 && row <= 5 && col <= 6
