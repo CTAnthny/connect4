@@ -17,20 +17,24 @@ class Board
   end
 
   def column_translator(column)
-    if column.upcase == 'A'
-      0
-    elsif column.upcase == 'B'
-      1
-    elsif column.upcase == 'C'
-      2
-    elsif column.upcase == 'D'
-      3
-    elsif column.upcase == 'E'
-      4
-    elsif column.upcase == 'F'
-      5
-    elsif column.upcase == 'G'
-      6
+    if !column.is_a?(Integer)
+      if column.upcase == 'A'
+        0
+      elsif column.upcase == 'B'
+        1
+      elsif column.upcase == 'C'
+        2
+      elsif column.upcase == 'D'
+        3
+      elsif column.upcase == 'E'
+        4
+      elsif column.upcase == 'F'
+        5
+      elsif column.upcase == 'G'
+        6
+      end
+    elsif column.is_a?(Integer) && column >= 0 && column <= 6
+      column
     end
   end
 
@@ -48,22 +52,15 @@ class Board
   end
 
   def add_turn(player, column)
-    if !column.is_a?(Integer)
-      column_index = column_translator(column)
-    elsif column.is_a?(Integer) && column >= 0 && column <= 6
-      column_index = column
-    end
+    column_index = column_translator(column)
     row_index = last_in_column(column_index)
-    # @board[row_index][column_index].player = player
     @last_turn = GameTurn.new(self, player, row_index, column_index)
     @last_turn.take!
   end
 
   def valid_move?(column)
-    columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
-    if column.is_a?(Integer) && column >= 0 && column <= 6
-      true
-    elsif column.is_a?(String) && columns.include?(column.upcase) 
+    column_index = column_translator(column)
+    if column_index.is_a?(Integer) && !last_in_column(column_index).nil?
       true
     else
       false

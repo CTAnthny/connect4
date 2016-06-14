@@ -38,17 +38,17 @@ describe GameTurn do
   describe "#winner?" do
     context "checking for win conditions" do
       describe '#horizontal_win?' do
-        let(:row_index) { 5 }
-        let(:column_index) { 3 }
+        # let(:row_index) { 5 }
+        # let(:column_index) { 3 }
 
       it 'is a win if a row of 4 of the same player is found' do
         3.times do |col_index|
           winning_board.add_turn(player, col_index)
         end
 
-        #  winning_turn = GameTurn.new(winning_board, player, 5, 3)
-        turn.take!
-        expect(turn).to be_winner
+        winning_turn = GameTurn.new(winning_board, player, 5, 3)
+        winning_turn.take!
+        expect(winning_turn).to be_winner
         # expect(winning_turn.winner?).to be(true)
       end
 
@@ -58,9 +58,9 @@ describe GameTurn do
         end
 
         losing_board.add_turn(opposing_player, 2)
-        # losing_turn = GameTurn.new(losing_board, player, 5, 3)
-        turn.take!
-        expect(turn).to_not be_winner
+        losing_turn = GameTurn.new(losing_board, player, 5, 3)
+        losing_turn.take!
+        expect(losing_turn).to_not be_winner
       end
 
       it 'is a win if a row of 4 of the same player is found in the middle of the row' do
@@ -68,9 +68,9 @@ describe GameTurn do
         winning_board.add_turn(player, 4)
         winning_board.add_turn(player, 5)
 
-        # winning_turn = GameTurn.new(winning_board, player, 5, 3)
-        turn.take!
-        expect(turn).to be_winner
+        winning_turn = GameTurn.new(winning_board, player, 5, 3)
+        winning_turn.take!
+        expect(winning_turn).to be_winner
       end
       end
 

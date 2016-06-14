@@ -1,7 +1,3 @@
-# - game
-# - player
-# - board.rb class
-# - spot.rb // token.rb class
 require_relative '../spec/spec_helper'
 
 puts "Welcome to Connect-4!\n"
@@ -17,7 +13,7 @@ puts board.printer
 while board.has_empty_spaces? && !board.winner?
   players_turn = players[turn_index]
 
-  puts "It is #{players_turn}'s turn.\n"
+  puts "It is #{players_turn.character}'s turn.\n"
 
   puts "What column do you want to play?"
   column_index = gets.chomp
@@ -33,4 +29,10 @@ while board.has_empty_spaces? && !board.winner?
   puts board.printer
 
   turn_index = turn_index == 0 ? 1 : 0
+end
+
+if !board.has_empty_spaces?
+  puts "It's a draw!"
+elsif board.winner?
+  puts "#{players_turn.character} wins!"
 end

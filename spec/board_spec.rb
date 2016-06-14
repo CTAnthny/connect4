@@ -82,28 +82,28 @@ describe Board do
     # check valid move when column is full
   end
 
-  describe "#add_turn" do
-    context "column is specified with a valid number" do
-      it "adds a piece to the board"
-
-      it "updates the last turn"
-    end
-
-    context "column is specified with a valid letter" do
-
-    end
-
-    context "column is specified with an invalid number" do
-
-    end
-
-    context "column is specified with an invalid letter" do
-
-    end
-  #   it "does something when someone succesfully adds a piece"
+  # describe "#add_turn" do
+  #   context "column is specified with a valid number" do
+  #     it "adds a piece to the board"
   #
-  #   it "returns an error when the column is not valid"
-  end
+  #     it "updates the last turn"
+  #   end
+  #
+  #   context "column is specified with a valid letter" do
+  #
+  #   end
+  #
+  #   context "column is specified with an invalid number" do
+  #
+  #   end
+  #
+  #   context "column is specified with an invalid letter" do
+  #
+  #   end
+  # #   it "does something when someone succesfully adds a piece"
+  # #
+  # #   it "returns an error when the column is not valid"
+  # end
   #
   # describe "#winner"
 end
